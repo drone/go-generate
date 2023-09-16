@@ -7,13 +7,13 @@ go install github.com/drone/go-generate
 Generate pipeline configuration for a local repository:
 
 ```
-autogen-go /path/to/local/repo
+go-generate /path/to/local/repo
 ```
 
 Generate pipeline configuration for a local repository:
 
 ```
-autogen-go /path/to/local/repo
+go-generate /path/to/local/repo
 ```
 
 Generate pipeline configuration for a remote repository:
@@ -21,23 +21,23 @@ Generate pipeline configuration for a remote repository:
 Go:
 
 ```
-autogen-go https://github.com/drone/go-scm.git
+go-generate https://github.com/drone/go-scm.git
 ```
 
 Node:
 
 ```
-autogen-go https://github.com/facebook/create-react-app.git 
+go-generate https://github.com/facebook/create-react-app.git 
 ```
 
 Rails:
 
 ```
-autogen-go https://github.com/railstutorial/sample_app_2nd_ed.git
+go-generate https://github.com/railstutorial/sample_app_2nd_ed.git
 ```
 
 Ruby:
 
 ```
-autogen-go https://github.com/slim-template/slim.git 
+go-generate https://github.com/slim-template/slim.git 
 ```
