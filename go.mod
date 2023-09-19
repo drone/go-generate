@@ -12,7 +12,7 @@ require (
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/drone/drone-go v1.7.1 // indirect
-	github.com/drone/spec v0.0.0-20230915020458-f218a35b2082 // indirect
+	github.com/drone/spec v0.0.0-20230919004456-7455b8913ff5 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect

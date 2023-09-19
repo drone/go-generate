@@ -35,11 +35,12 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// add the go build step
 	{
-		script := new(spec.StepExec)
-		script.Run = "go build"
+		script := new(spec.StepRun)
+		script.Script = []string{"go build"}
 
 		if useImage {
-			script.Image = "golang"
+			script.Container = new(spec.Container)
+			script.Container.Image = "golang:1"
 		}
 
 		step := new(spec.Step)
@@ -52,11 +53,12 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// add the go test step
 	{
-		script := new(spec.StepExec)
-		script.Run = "go test -v ./..."
+		script := new(spec.StepRun)
+		script.Script = []string{"go test -v ./..."}
 
 		if useImage {
-			script.Image = "golang"
+			script.Container = new(spec.Container)
+			script.Container.Image = "golang:1"
 		}
 
 		step := new(spec.Step)

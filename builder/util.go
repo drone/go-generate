@@ -53,23 +53,25 @@ func unmarshal(fsys fs.FS, name string, v interface{}) error {
 // helper function returns true if the runtime engine is
 // kubernetes or is container-based.
 func isContainerRuntime(pipeline *spec.Pipeline) bool {
-	// ensure default stages already added
-	if len(pipeline.Stages) == 0 {
-		return false
-	}
-	// ensure default stage is continuous integration
-	stage, ok := pipeline.Stages[0].Spec.(*spec.StageCI)
-	if !ok {
-		return false
-	}
-	// ensure runtime is not null
-	if stage.Runtime == nil {
-		return false
-	}
-	switch stage.Runtime.Type {
-	case "kubernetes":
-		return true
-	default:
-		return false
-	}
+	return true
+
+	// // ensure default stages already added
+	// if len(pipeline.Stages) == 0 {
+	// 	return false
+	// }
+	// // ensure default stage is continuous integration
+	// stage, ok := pipeline.Stages[0].Spec.(*spec.StageCI)
+	// if !ok {
+	// 	return false
+	// }
+	// // ensure runtime is not null
+	// if stage.Runtime == nil {
+	// 	return false
+	// }
+	// switch stage.Runtime.Type {
+	// case "kubernetes":
+	// 	return true
+	// default:
+	// 	return false
+	// }
 }

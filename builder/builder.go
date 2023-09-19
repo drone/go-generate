@@ -65,8 +65,8 @@ func NewRules(rules []Rule) *Builder {
 func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	stageci := new(spec.StageCI)
 	stageci.Platform = new(spec.Platform)
-	stageci.Platform.Os = spec.OSLinux
-	stageci.Platform.Arch = spec.ArchAmd64
+	stageci.Platform.Os = "linux"
+	stageci.Platform.Arch = "amd64"
 
 	stage := new(spec.Stage)
 	stage.Name = "build"
@@ -85,6 +85,18 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 		// never prevent yaml generation.
 	}
 
+	if len(stageci.Steps) == 0 {
+		stageci.Steps = append(stageci.Steps, &spec.Step{
+			Type: "run",
+			Spec: &spec.StepRun{
+				Script: []string{"echo hello gitness"},
+				Container: &spec.Container{
+					Image: "alpine:3",
+				},
+			},
+		})
+	}
+
 	config := new(spec.Config)
 	config.Kind = "pipeline"
 	config.Spec = pipeline
@@ -97,11 +109,12 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 
 // helper function to create a script step.
 func createScriptStep(image, name, command string) *spec.Step {
-	script := new(spec.StepExec)
-	script.Run = command
+	script := new(spec.StepRun)
+	script.Script = []string{command}
 
 	if image != "" {
-		script.Image = image
+		script.Container = new(spec.Container)
+		script.Container.Image = image
 	}
 
 	step := new(spec.Step)
