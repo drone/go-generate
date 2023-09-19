@@ -27,6 +27,8 @@ github.com/drone/spec v0.0.0-20230203155728-6f5b316cad3e h1:9IrlHM84CSV6ui+PnxWR
 github.com/drone/spec v0.0.0-20230203155728-6f5b316cad3e/go.mod h1:lhM5nV3zKzXnHD2WPLQ2KoJ/65hr3vr0KaiKod2T3W8=
 github.com/drone/spec v0.0.0-20230915020458-f218a35b2082 h1:xEFfRsmYwL5zYP6K/1AEKvQ8C8UL2EhDh3naLqHR7sk=
 github.com/drone/spec v0.0.0-20230915020458-f218a35b2082/go.mod h1:MgRTKVnzXhvvlZTDRdTv8dA4nG9gtw+Jz06FauXkU/U=
+github.com/drone/spec v0.0.0-20230919004456-7455b8913ff5 h1:NgAseJNQpJE3XtgJUPu4x7x5fcBjqZ3oKHDJfwBYdWk=
+github.com/drone/spec v0.0.0-20230919004456-7455b8913ff5/go.mod h1:KyQZA9qwuscbbM7yTrtZg25Wammoc5GKwaRem8kDA5k=
 github.com/emirpasic/gods v1.18.1 h1:FXtiHYKDGKCW2KzwZKx0iC0PQmdlorYgdFG9jPXJ1Bc=
 github.com/emirpasic/gods v1.18.1/go.mod h1:8tpGGwCnJ5H4r6BWwaV6OrWmMoPhUl5jm/FMNAnJvWQ=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
