@@ -28,7 +28,7 @@ func ConfigurePlatform(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// on mac hardware.
 	if isXcode(fsys) {
 		stage.Platform = &spec.Platform{
-			Os: spec.OSMacos,
+			Os: spec.OSMacos.String(),
 		}
 	}
 

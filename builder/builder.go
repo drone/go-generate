@@ -65,8 +65,8 @@ func NewRules(rules []Rule) *Builder {
 func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	stageci := new(spec.StageCI)
 	stageci.Platform = new(spec.Platform)
-	stageci.Platform.Os = spec.OSLinux
-	stageci.Platform.Arch = spec.ArchAmd64
+	stageci.Platform.Os = spec.OSLinux.String()
+	stageci.Platform.Arch = spec.ArchAmd64.String()
 
 	stage := new(spec.Stage)
 	stage.Name = "build"
