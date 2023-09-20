@@ -100,6 +100,7 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 	config := new(spec.Config)
 	config.Kind = "pipeline"
 	config.Spec = pipeline
+	config.Version = 1
 	return yaml.Marshal(config)
 }
 
@@ -119,7 +120,7 @@ func createScriptStep(image, name, command string) *spec.Step {
 
 	step := new(spec.Step)
 	step.Name = name
-	step.Type = "script"
+	step.Type = "run"
 	step.Spec = script
 
 	return step

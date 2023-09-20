@@ -33,10 +33,10 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 	// execution environment.
 	useImage := isContainerRuntime(pipeline)
 
-	// add the go build step
+	// add the go install step
 	{
 		script := new(spec.StepRun)
-		script.Script = []string{"go build"}
+		script.Script = []string{"go install ./..."}
 
 		if useImage {
 			script.Container = new(spec.Container)
@@ -44,8 +44,8 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 		}
 
 		step := new(spec.Step)
-		step.Name = "go_build"
-		step.Type = "script"
+		step.Name = "go_install"
+		step.Type = "run"
 		step.Spec = script
 
 		stage.Steps = append(stage.Steps, step)
@@ -63,7 +63,7 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 		step := new(spec.Step)
 		step.Name = "go_test"
-		step.Type = "script"
+		step.Type = "run"
 		step.Spec = script
 
 		stage.Steps = append(stage.Steps, step)
