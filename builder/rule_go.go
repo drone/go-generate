@@ -34,7 +34,22 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 	useImage := isContainerRuntime(pipeline)
 
 	// add the go install step
-	{
+	if exists(fsys, "main.go") {
+		script := new(spec.StepRun)
+		script.Script = []string{"go build"}
+
+		if useImage {
+			script.Container = new(spec.Container)
+			script.Container.Image = "golang:1"
+		}
+
+		step := new(spec.Step)
+		step.Name = "go_install"
+		step.Type = "run"
+		step.Spec = script
+
+		stage.Steps = append(stage.Steps, step)
+	} else {
 		script := new(spec.StepRun)
 		script.Script = []string{"go install ./..."}
 

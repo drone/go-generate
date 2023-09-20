@@ -30,9 +30,9 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		return nil
 	}
 
-	// check if we should use a container-based
-	// execution environment.
-	useImage := isContainerRuntime(pipeline)
+	// // check if we should use a container-based
+	// // execution environment.
+	// useImage := isContainerRuntime(pipeline)
 
 	// add the docker build step
 	{
@@ -42,21 +42,21 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// this as the image name, if possible.
 
 		script := new(spec.StepPlugin)
-		script.Image = "plugins/docker"
-		script.With = map[string]interface{}{
+		script.Name = "docker"
+		script.Inputs = map[string]interface{}{
 			"tags":    "latest",
 			"repo":    repo,
 			"dry_run": true,
 		}
 
-		if useImage {
-			script.Image = "plugins/docker"
-			script.Privileged = true
-		} else {
-			// TODO we should eventually use the container-less
-			// version of the plugin here
-			script.Image = "plugins/docker"
-		}
+		// if useImage {
+		// 	script.Image = "plugins/docker"
+		// 	script.Privileged = true
+		// } else {
+		// 	// TODO we should eventually use the container-less
+		// 	// version of the plugin here
+		// 	script.Image = "plugins/docker"
+		// }
 
 		step := new(spec.Step)
 		step.Name = "docker_build"
