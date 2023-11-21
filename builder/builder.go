@@ -49,6 +49,8 @@ func New() *Builder {
 			ConfigureRust,
 			ConfigureSwift,
 			ConfigureDocker,
+
+			// default rule should always be last in the list
 			ConfigureDefault,
 		},
 	}
