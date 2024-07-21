@@ -17,13 +17,13 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureDefault configures a default step if the system
 // is unable to automatically add any language-specific steps.
 func ConfigureDefault(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// ignore if stage already contains steps
 	if len(stage.Steps) == 0 {
@@ -38,7 +38,8 @@ func ConfigureDefault(fsys fs.FS, pipeline *spec.Pipeline) error {
 	}
 
 	// add dummy hello world step
-	createScriptStep(image, "echo", "echo hello world")
+	step := createScriptStep(image, "echo", "echo hello world")
+	stage.Steps = append(stage.Steps, step)
 
 	return nil
 }

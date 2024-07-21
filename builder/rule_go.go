@@ -17,12 +17,12 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureGo configures a Go step.
 func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// check for the go.mod file.
 	if !exists(fsys, "go.mod") {
@@ -35,51 +35,48 @@ func ConfigureGo(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 	// add the go install step
 	if exists(fsys, "main.go") {
-		script := new(spec.StepRun)
-		script.Script = []string{"go build"}
+		run := new(spec.StepRun)
+		run.Script = []string{"go build"}
 
 		if useImage {
-			script.Container = new(spec.Container)
-			script.Container.Image = "golang:1"
+			run.Container = new(spec.Container)
+			run.Container.Image = "golang:1"
 		}
 
 		step := new(spec.Step)
 		step.Name = "go_install"
-		step.Type = "run"
-		step.Spec = script
+		step.Run = run
 
 		stage.Steps = append(stage.Steps, step)
 	} else {
-		script := new(spec.StepRun)
-		script.Script = []string{"go install ./..."}
+		run := new(spec.StepRun)
+		run.Script = []string{"go install ./..."}
 
 		if useImage {
-			script.Container = new(spec.Container)
-			script.Container.Image = "golang:1"
+			run.Container = new(spec.Container)
+			run.Container.Image = "golang:1"
 		}
 
 		step := new(spec.Step)
 		step.Name = "go_install"
-		step.Type = "run"
-		step.Spec = script
+		step.Run = run
 
 		stage.Steps = append(stage.Steps, step)
 	}
 
 	// add the go test step
 	{
-		script := new(spec.StepRun)
-		script.Script = []string{"go test -v ./..."}
+		run := new(spec.StepRun)
+		run.Script = []string{"go test -v ./..."}
 
 		if useImage {
-			script.Container = new(spec.Container)
-			script.Container.Image = "golang:1"
+			run.Container = new(spec.Container)
+			run.Container.Image = "golang:1"
 		}
 
 		step := new(spec.Step)
 		step.Name = "go_test"
-		step.Type = "run"
-		step.Spec = script
+		step.Run = run
 
 		stage.Steps = append(stage.Steps, step)
 	}

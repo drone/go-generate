@@ -17,12 +17,12 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigurePlatform configures the platform
 func ConfigurePlatform(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// xcode project should always run
 	// on mac hardware.

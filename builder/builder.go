@@ -19,7 +19,8 @@ import (
 	"errors"
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
+
 	"github.com/ghodss/yaml"
 )
 
@@ -65,15 +66,11 @@ func NewRules(rules []Rule) *Builder {
 
 // Build the pipeline configuration.
 func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
-	stageci := new(spec.StageCI)
-	stageci.Platform = new(spec.Platform)
-	stageci.Platform.Os = "linux"
-	stageci.Platform.Arch = "amd64"
-
 	stage := new(spec.Stage)
 	stage.Name = "build"
-	stage.Type = "ci"
-	stage.Spec = stageci
+	stage.Platform = new(spec.Platform)
+	stage.Platform.Os = "linux"
+	stage.Platform.Arch = "amd64"
 
 	pipeline := new(spec.Pipeline)
 	pipeline.Stages = append(pipeline.Stages, stage)
@@ -87,10 +84,9 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 		// never prevent yaml generation.
 	}
 
-	if len(stageci.Steps) == 0 {
-		stageci.Steps = append(stageci.Steps, &spec.Step{
-			Type: "run",
-			Spec: &spec.StepRun{
+	if len(stage.Steps) == 0 {
+		stage.Steps = append(stage.Steps, &spec.Step{
+			Run: &spec.StepRun{
 				Script: []string{"echo hello gitness"},
 				Container: &spec.Container{
 					Image: "alpine:3",
@@ -99,11 +95,9 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 		})
 	}
 
-	config := new(spec.Config)
-	config.Kind = "pipeline"
-	config.Spec = pipeline
-	config.Version = 1
-	return yaml.Marshal(config)
+	schema := new(spec.Schema)
+	schema.Pipeline = pipeline
+	return yaml.Marshal(schema)
 }
 
 //
@@ -112,18 +106,17 @@ func (b *Builder) Build(fsys fs.FS) ([]byte, error) {
 
 // helper function to create a script step.
 func createScriptStep(image, name, command string) *spec.Step {
-	script := new(spec.StepRun)
-	script.Script = []string{command}
+	run := new(spec.StepRun)
+	run.Script = []string{command}
 
 	if image != "" {
-		script.Container = new(spec.Container)
-		script.Container.Image = image
+		run.Container = new(spec.Container)
+		run.Container.Image = image
 	}
 
 	step := new(spec.Step)
 	step.Name = name
-	step.Type = "run"
-	step.Spec = script
+	step.Run = run
 
 	return step
 }

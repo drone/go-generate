@@ -17,12 +17,12 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureDocker configures a Docker step.
 func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// check if a Dockerfile exists
 	// TODO check subdirectories with glob
@@ -41,9 +41,9 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 		// url. extract the repository name from the url and use
 		// this as the image name, if possible.
 
-		script := new(spec.StepPlugin)
-		script.Name = "docker"
-		script.Inputs = map[string]interface{}{
+		tmpl := new(spec.StepTemplate)
+		tmpl.Uses = "docker"
+		tmpl.With = map[string]interface{}{
 			"tags":    "latest",
 			"repo":    repo,
 			"dry_run": true,
@@ -60,8 +60,7 @@ func ConfigureDocker(fsys fs.FS, pipeline *spec.Pipeline) error {
 
 		step := new(spec.Step)
 		step.Name = "docker_build"
-		step.Type = "plugin"
-		step.Spec = script
+		step.Template = tmpl
 
 		stage.Steps = append(stage.Steps, step)
 	}

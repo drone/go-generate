@@ -17,12 +17,12 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureNode configures a Node step.
 func ConfigureNode(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// check for the package.json file.
 	if !exists(fsys, "package.json") {

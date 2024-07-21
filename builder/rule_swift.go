@@ -17,12 +17,12 @@ package builder
 import (
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureSwift configures a Swift step.
 func ConfigureSwift(fsys fs.FS, pipeline *spec.Pipeline) error {
-	_ = pipeline.Stages[0].Spec.(*spec.StageCI)
+	// stage := pipeline.Stages[0]
 
 	// TODO
 

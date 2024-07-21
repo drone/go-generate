@@ -18,12 +18,12 @@ import (
 	"bytes"
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // ConfigureRails configures a Ruby on Rails step.
 func ConfigureRails(fsys fs.FS, pipeline *spec.Pipeline) error {
-	stage := pipeline.Stages[0].Spec.(*spec.StageCI)
+	stage := pipeline.Stages[0]
 
 	// check if we should use a container-based
 	// execution environment.

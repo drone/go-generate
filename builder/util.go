@@ -18,7 +18,7 @@ import (
 	"encoding/json"
 	"io/fs"
 
-	spec "github.com/drone/spec/dist/go"
+	spec "github.com/bradrydzewski/spec/yaml"
 )
 
 // helper function returns true if the files or folders
