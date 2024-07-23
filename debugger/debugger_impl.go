@@ -12,25 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package debugger
 
 import (
-	"context"
-	"flag"
-	"os"
-
-	"github.com/drone/go-generate/internal/command"
-
-	"github.com/google/subcommands"
+	"github.com/drone/go-generate/utils/openai"
 )
 
-func main() {
-	subcommands.Register(new(command.Generate), "")
-	subcommands.Register(new(command.Optimize), "")
-	subcommands.Register(new(command.Update), "")
-	subcommands.Register(new(command.Debug), "")
+type DebuggerImpl struct {
+	client openai.Client
+}
 
-	flag.Parse()
-	ctx := context.Background()
-	os.Exit(int(subcommands.Execute(ctx)))
+func New(client openai.Client) *DebuggerImpl {
+	return &DebuggerImpl{client: client}
+}
+
+func (d *DebuggerImpl) Debug(in *Input) (*Output, error) {
+	return new(Output), nil
 }

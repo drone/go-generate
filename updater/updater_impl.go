@@ -12,25 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package updater
 
 import (
-	"context"
-	"flag"
-	"os"
-
-	"github.com/drone/go-generate/internal/command"
-
-	"github.com/google/subcommands"
+	"github.com/drone/go-generate/utils/openai"
 )
 
-func main() {
-	subcommands.Register(new(command.Generate), "")
-	subcommands.Register(new(command.Optimize), "")
-	subcommands.Register(new(command.Update), "")
-	subcommands.Register(new(command.Debug), "")
+type UpdaterImpl struct {
+	client openai.Client
+}
 
-	flag.Parse()
-	ctx := context.Background()
-	os.Exit(int(subcommands.Execute(ctx)))
+func New(client openai.Client) *UpdaterImpl {
+	return &UpdaterImpl{client: client}
+}
+
+func (d *UpdaterImpl) Update(in *Input) (*Output, error) {
+
+	//
+	// TODO AI code here
+	//
+
+	// FIXME: for now we just echo the yaml input as the output
+	out := new(Output)
+	out.Before = in.Config
+	out.After = in.Config
+
+	return out, nil
 }

@@ -12,25 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package optimizer
 
 import (
-	"context"
-	"flag"
-	"os"
-
-	"github.com/drone/go-generate/internal/command"
-
-	"github.com/google/subcommands"
+	"github.com/drone/go-generate/utils/openai"
 )
 
-func main() {
-	subcommands.Register(new(command.Generate), "")
-	subcommands.Register(new(command.Optimize), "")
-	subcommands.Register(new(command.Update), "")
-	subcommands.Register(new(command.Debug), "")
+type OptimizerImpl struct {
+	client openai.Client
+}
 
-	flag.Parse()
-	ctx := context.Background()
-	os.Exit(int(subcommands.Execute(ctx)))
+func New(client openai.Client) *OptimizerImpl {
+	return &OptimizerImpl{client: client}
+}
+
+func (d *OptimizerImpl) Optimize(in *Input) (*Output, error) {
+
+	// FIXME: for now we just echo the yaml input as the output
+	out := new(Output)
+	out.Before = in.Config
+	out.After = in.Config
+
+	return out, nil
 }
